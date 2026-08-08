@@ -1,226 +1,436 @@
-# Mobile Computing Assessment 25/26
-## Sergio camara - 22481885
-## Moblie Application Development
-## Project Overview
-This project is a cross platform task management application developed using **.NET MAUI 9.0**.
-The application allows users to create, organise, manage and complete tasks while integrating mobile hardware features and accessibility focused design features.
+# Cross-Platform Task Management Application
 
-The Application aims to combine:
+A cross-platform task management application developed using **.NET MAUI 9.0**.
+
+The application allows users to create, organise, manage and complete tasks while integrating mobile device hardware, local data storage and accessibility-focused design features.
+
+The project was designed around five core areas:
 
 - Productivity
 - User interaction
 - Accessibility
-- Real world mobile functionality
-- Cross platform development principles
+- Real-world mobile functionality
+- Cross-platform development principles
+
+---
 
 ## Technologies Used
-NET MAUI
-SQLite (local database)
-MVVM Architecture
-Device APIs: Camera (MediaPicker), Location (Geolocation, Geocoding), Flashlight, Text-to-Speech, Haptic Feedback
+
+The application was developed using:
 
 - **.NET MAUI 9.0**
 - **C#**
 - **XAML**
-- **SQLite** (local database storage)
-- **MVVM Architecture**
+- **SQLite** for local database storage
+- **MVVM architecture**
 - **CommunityToolkit.Maui**
 - **Plugin.Maui.Audio**
 
-  ---
-  ## NuGet Packages Required
-  Install the following packages:
+The application also makes use of several native device APIs, including:
+
+- Camera using `MediaPicker`
+- Location using `Geolocation`
+- Address lookup using `Geocoding`
+- Flashlight
+- Text-to-Speech
+- Haptic feedback
+- Audio and media playback
+
+---
+
+## NuGet Packages
+
+The following NuGet packages are required:
 
 - `sqlite-net-pcl`
 - `CommunityToolkit.Maui`
 - `Plugin.Maui.Audio`
-- ## Prerequisites
 
-To run the project, you need:
+---
 
-- Visual Studio 2022 or 
+## Prerequisites
+
+To run the project, you will need:
+
+- Visual Studio 2022
 - .NET MAUI 9.0 workload installed
-- Android Emulator or Android physical device
+- Android Emulator or a physical Android device
 
+### Android Permissions
 
-Permissions Required (Android/Android emulator)
-Camera
-Location 
-Flashlight
-
-This is an application that is a cross-platform task management app developed using.NETMAUI 9.0.
-It allows users to create, manage, and interact with tasks. With the use of standard features and mobile hardware integrations.
-
-The app focuses on: productivity, user interaction, accessibility, and real-world mobile functionality
-
-Features used in the app:
-
-Task Management features such as:
+The application requires access to selected device functionality, including:
 
 - Camera
 - Location
 - Flashlight
-- Audio / Media playback
 
-## Main Features
+Permission handling is implemented to prevent unsupported or unavailable device features from causing application crashes.
+
+---
+
+# Main Features
 
 ## Task Management
 
-Users can:
+The core functionality of the application allows users to:
 
 - Create tasks
 - Edit existing tasks
 - Delete tasks
 - Mark tasks as completed
-- View pending and completed tasks
-- Filter tasks:
-  - All
-  - Completed
-  - Pending
-  - High Priority
-  - Medium Priority
-  - Low Priority
-- Sort tasks:
-  - Due date ascending
-  - Due date descending
-  - Title A-Z
-  - Title Z-A
+- View pending tasks
+- View completed tasks
+
+Users can also filter tasks by:
+
+- All
+- Completed
+- Pending
+- High Priority
+- Medium Priority
+- Low Priority
+
+Tasks can be sorted by:
+
+- Due date ascending
+- Due date descending
+- Title A-Z
+- Title Z-A
 
 ---
-## Task Management Priority System
 
-Tasks support priority levels:
+## Task Priority System
+
+Tasks can be assigned one of three priority levels:
 
 - High
 - Medium
 - Low
 
-Priority is used for things such as :
+The priority system is used throughout the application to provide visual and physical feedback.
 
-- Colour coded task borders
+Priority levels can affect:
+
+- Colour-coded task borders
 - Sound feedback
 - Flashlight alert intensity
 - Haptic feedback strength
 
+This provides users with multiple ways of identifying the importance of a task.
+
 ---
 
-Media integration 
-Users can attach images to tasks using the device camera.
+## Media Integration
+
+Users can attach images directly to tasks using the device camera.
 
 Features include:
-- Capture task photos using `MediaPicker`
-- Store images locally
-- Display attached images inside task cards 
 
-## Accessibility Features and WCAG Considerations
+- Capturing task photographs using `MediaPicker`
+- Storing images locally
+- Displaying attached images within task cards
 
-The application was designed with accessibility in mind and follows relevant WCAG principles for mobile applications.
-
-### Included Features
-
-### Text-to-Speech
-- Tap the speaker button to read tasks aloud.
-- Helps visually impaired users.
-- Helps users with reading difficulties.
-
-### Large Touch Targets
-- Larger buttons reduce misclicks.
-- Supports users with motor impairments or weaker hand-eye coordination.
-
-### Large Text Mode
-- User-controlled font scaling through settings.
-- Supports users with reduced eyesight.
-
-### Dark Mode / Light Mode
-- Improves readability depending on environment and time of day.
-- Helps reduce eye strain.
-
-### Colour + Text Meaning
-- Priority uses both colour and text labels.
-- Does not rely on colour alone.
-
-### Haptic Feedback
-- Physical confirmation when completing tasks.
-
-### Flashlight Alerts
-- Useful for hearing impaired users.
-- Helpful when the user is not actively looking at the screen.
-
-### Simple Layout
-- Clear labels.
-- Logical page flow.
-- Readable forms.
-
-### Gesture + Button Alternatives
-- Swipe gestures available for completing and deleting tasks.
-- Standard buttons are also available.
+This allows users to add visual context to individual tasks.
 
 ---
 
-## These accessibility features all align with the four core WCAG principles:
+## Location Features
 
-### Perceivable
-- Supports dark mode and light mode.
-- Large text mode improves readability.
-- Good colour contrast between text and backgrounds.
-- Priority uses both colour and text labels.
+The application integrates device location functionality using:
 
-### Operable
-- Large touch targets for buttons.
-- Swipe gestures are supported, with button alternatives available.
-- Clear navigation through tabbed layout.
+- `Geolocation`
+- `Geocoding`
 
-### Understandable
-- Clear labels, placeholders, and simple page structure.
-- Consistent task actions (Edit, Complete, Delete).
-- Helpful validation and feedback messages.
+Location functionality can be used alongside task information while also handling scenarios where location access is unavailable or permission is denied.
 
-### Robust
-- Cross-platform design using .NET MAUI. 9.0
-- Works across Android and Windows environments.
-- Uses device APIs with fallback handling where features are unsupported to stop it crashing.
+Invalid location searches and geocoding failures are handled through user-friendly feedback rather than application crashes.
 
-### Validation
+---
 
-- Prevents empty task titles
-- Handles invalid location searches
-- Clear status messages shown
+## Audio and Device Feedback
 
-### Error Handling
-handles:
+The application integrates multiple forms of device feedback to improve interaction with tasks.
+
+These include:
+
+- Audio playback
+- Text-to-Speech
+- Haptic feedback
+- Flashlight alerts
+- Toast messages
+
+These features provide additional visual, physical and audio feedback depending on the task or action being performed.
+
+---
+
+# Accessibility
+
+Accessibility was an important consideration throughout the application's design.
+
+The interface incorporates features intended to support users with different visual, motor and hearing requirements.
+
+## Text-to-Speech
+
+Users can select the speaker control to have task information read aloud.
+
+This can support:
+
+- Users with visual impairments
+- Users with reading difficulties
+- Users who prefer audio-based interaction
+
+---
+
+## Large Touch Targets
+
+Buttons and interactive controls use larger touch areas to reduce accidental inputs.
+
+This can improve usability for users with:
+
+- Motor impairments
+- Reduced dexterity
+- Reduced hand-eye coordination
+
+---
+
+## Large Text Mode
+
+Users can enable larger text through the application settings.
+
+This provides user-controlled font scaling and improves readability for users with reduced eyesight.
+
+---
+
+## Dark Mode and Light Mode
+
+The application supports both:
+
+- Dark mode
+- Light mode
+
+This allows users to select a display mode that is more comfortable depending on their environment and personal preference.
+
+It can also help reduce eye strain in different lighting conditions.
+
+---
+
+## Colour and Text-Based Information
+
+Task priority is represented using both:
+
+- Colour
+- Text labels
+
+The application therefore does not rely exclusively on colour to communicate meaning.
+
+---
+
+## Haptic Feedback
+
+Haptic feedback provides physical confirmation when users perform actions such as completing tasks.
+
+Feedback strength can also vary depending on task priority.
+
+---
+
+## Flashlight Alerts
+
+The flashlight can be used as an additional alert mechanism.
+
+This may benefit:
+
+- Hearing-impaired users
+- Users who are not actively looking at the screen
+- Situations where visual device feedback is useful
+
+Flashlight behaviour can also vary according to task priority.
+
+---
+
+## Simple Interface Design
+
+The user interface was designed around:
+
+- Clear labels
+- Logical page flow
+- Readable forms
+- Consistent controls
+- Simple navigation
+
+The aim was to minimise unnecessary complexity while maintaining the application's functionality.
+
+---
+
+## Gesture and Button Alternatives
+
+The application supports swipe gestures for actions such as:
+
+- Completing tasks
+- Deleting tasks
+
+Equivalent standard buttons are also available.
+
+This provides users with alternative ways of carrying out the same actions rather than relying entirely on gestures.
+
+---
+
+# WCAG Considerations
+
+The accessibility features were developed with the four core WCAG principles in mind.
+
+## Perceivable
+
+The application supports:
+
+- Dark mode
+- Light mode
+- Large text mode
+- Readable text and background contrast
+- Priority identification using both colour and text
+
+---
+
+## Operable
+
+The application includes:
+
+- Large touch targets
+- Swipe gestures
+- Button alternatives to gestures
+- Clear tab-based navigation
+- Accessible interaction methods
+
+---
+
+## Understandable
+
+The application uses:
+
+- Clear labels
+- Descriptive placeholders
+- Consistent page layouts
+- Consistent task actions
+- Clear validation
+- User-friendly feedback messages
+
+Core task actions remain consistent throughout the application:
+
+- Edit
+- Complete
+- Delete
+
+---
+
+## Robust
+
+The application is built using **.NET MAUI 9.0** and follows a cross-platform architecture.
+
+It is designed to operate across supported environments including:
+
+- Android
+- Windows
+
+Device APIs include fallback and exception handling where functionality is unsupported.
+
+This reduces the likelihood of unsupported hardware features causing application crashes.
+
+---
+
+# Validation
+
+The application includes input validation and user feedback.
+
+Examples include:
+
+- Preventing empty task titles
+- Handling invalid location searches
+- Displaying clear status messages
+- Preventing invalid task information from being saved
+
+---
+
+# Error Handling
+
+The application includes error handling for several potential issues, including:
 
 - Camera unavailable
-- Permission denied
+- Camera permission denied
+- Location permission denied
 - Geocoding failures
 - Database save errors
 - Unsupported device features
+- Hardware functionality unavailable
 
-The app uses user-friendly messages instead of crashing.
+Where possible, the application displays clear user-friendly messages instead of terminating unexpectedly.
 
 ---
-## Notifications Was Attempt
 
-Push / local notifications were originally researched and partially tried during development.
+# Notifications and Reminder System
 
-However, due to the complex nature of issues I came across with devices/emulators and time constraints, the feature was removed in the end. For a more favourable and more stable in app reminder system using:
+Push and local notifications were originally researched and partially implemented during development.
 
-- Toast popups
+However, compatibility issues across physical devices and emulators, combined with development time constraints, meant the notification functionality could not be implemented to the required level of stability.
+
+The feature was therefore removed in favour of a more reliable in-application reminder system.
+
+The final application uses:
+
+- Toast notifications
 - Sound alerts
 - Haptic feedback
 - Flashlight alerts
 
-This ensured a more reliable and polished final submission with everyhting working.
+This decision prioritised application stability and ensured that the implemented functionality operated consistently in the final version.
 
-## Future Improvements
+---
 
-Possible future upgrades include:
+# Architecture
 
-- Fully working local notifications
-- Cloud sync
+The application follows the **MVVM (Model-View-ViewModel)** architecture.
+
+This provides separation between:
+
+- User interface components
+- Application logic
+- Data models
+- Data access
+
+Using MVVM helps improve maintainability and keeps the application's interface and logic more clearly separated.
+
+SQLite is used for persistent local data storage, allowing task information to remain available between application sessions.
+
+---
+
+# Project Focus
+
+The project demonstrates practical experience in:
+
+- Cross-platform mobile application development
+- C# development
+- XAML interface development
+- MVVM architecture
+- Local SQLite databases
+- Mobile hardware integration
+- Device permission handling
+- Accessibility-focused UI design
+- Input validation
+- Exception handling
+- Media integration
+- Location services
+- User feedback systems
+
+---
+
+# Future Improvements
+
+Potential future improvements include:
+
+- Fully implemented local notifications
+- Cloud synchronisation
 - Recurring tasks
-- Categories/tags
+- Categories and tags
 - Calendar integration
 - Map-based location picker
 - Task sharing between users
 
-
+These features would extend the application from a locally managed task system into a more complete productivity platform.

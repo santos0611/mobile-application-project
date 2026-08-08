@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!-- Settings page.
+     Allows the user to customise accessibility, feedback,
+     reminders, and app appearance preferences. -->
+
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="assessment2526.Settings"
+    Title="Settings"
+    BackgroundColor="{AppThemeBinding Light=#F7F7F7, Dark=#121212}">
+
+    <!-- ScrollView keeps the page usable on smaller phones -->
+    <ScrollView>
+
+        <!-- Main vertical layout for all settings sections -->
+        <VerticalStackLayout Padding="20" Spacing="18">
+
+            <!-- Page heading -->
+            <VerticalStackLayout Spacing="6">
+
+                <!-- Main title -->
+                <Label Text="Settings"
+                       FontSize="28"
+                       FontAttributes="Bold"
+                       TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+
+                <!-- Subtitle / explanation -->
+                <Label Text="Control sound, vibration, speech, reminders, and appearance."
+                       FontSize="14"
+                       TextColor="{AppThemeBinding Light=#555555, Dark=#CCCCCC}" />
+
+            </VerticalStackLayout>
+
+            <!-- ===================================================== -->
+            <!-- ACCESSIBILITY SECTION -->
+            <!-- ===================================================== -->
+            <Border Stroke="{AppThemeBinding Light=#DDDDDD, Dark=#2A2A2A}"
+                    BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 16"
+                    Padding="16">
+
+                <VerticalStackLayout Spacing="14">
+
+                    <!-- Section title -->
+                    <Label Text="Accessibility"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+
+                    <!-- Grid keeps labels left / switches right -->
+                    <Grid ColumnDefinitions="*,Auto"
+                          RowDefinitions="Auto,Auto">
+
+                        <!-- Speech toggle -->
+                        <VerticalStackLayout Grid.Row="0"
+                                             Grid.Column="0"
+                                             Spacing="2">
+
+                            <Label Text="Speech"
+                                   FontAttributes="Bold"
+                                   TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+
+                            <Label Text="Enable text-to-speech for tasks."
+                                   FontSize="13"
+                                   TextColor="{AppThemeBinding Light=#666666, Dark=#BBBBBB}" />
+
+                        </VerticalStackLayout>
+
+                        <Switch x:Name="SpeechSwitch"
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                SemanticProperties.Description="Toggle text to speech" />
+
+                        <!-- Large text mode toggle -->
+                        <VerticalStackLayout Grid.Row="1"
+                                             Grid.Column="0"
+                                             Spacing="2"
+                                             Margin="0,14,0,0">
+
+                            <Label Text="Large text mode"
+                                   FontAttributes="Bold"
+                                   TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+
+                            <Label Text="Improve readability with larger font sizes."
+                                   FontSize="13"
+                                   TextColor="{AppThemeBinding Light=#666666, Dark=#BBBBBB}" />
+
+                        </VerticalStackLayout>
+
+                        <Switch x:Name="LargeTextSwitch"
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                Margin="0,14,0,0"
+                                SemanticProperties.Description="Toggle large text mode" />
+
+                    </Grid>
+
+                </VerticalStackLayout>
+
+            </Border>
+
+            <!-- ===================================================== -->
+            <!-- FEEDBACK SECTION -->
+            <!-- ===================================================== -->
+            <Border Stroke="{AppThemeBinding Light=#DDDDDD, Dark=#2A2A2A}"
+                    BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 16"
+                    Padding="16">
+
+                <VerticalStackLayout Spacing="14">
+
+                    <Label Text="Feedback"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+
+                    <Grid ColumnDefinitions="*,Auto"
+                          RowDefinitions="Auto,Auto">
+
+                        <!-- Sound toggle -->
+                        <VerticalStackLayout Grid.Row="0"
+                                             Grid.Column="0"
+                                             Spacing="2">
+
+                            <Label Text="Sound"
+                                   FontAttributes="Bold"
+                                   TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+
+                            <Label Text="Play sounds for completed and location-based tasks."
+                                   FontSize="13"
+                                   TextColor="{AppThemeBinding Light=#666666, Dark=#BBBBBB}" />
+
+                        </VerticalStackLayout>
+
+                        <Switch x:Name="SoundSwitch"
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                SemanticProperties.Description="Toggle app sounds" />
+
+                        <!-- Vibration toggle -->
+                        <VerticalStackLayout Grid.Row="1"
+                                             Grid.Column="0"
+                                             Spacing="2"
+                                             Margin="0,14,0,0">
+
+                            <Label Text="Vibration"
+                                   FontAttributes="Bold"
+                                   TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+
+                            <Label Text="Use haptic feedback for important actions."
+                                   FontSize="13"
+                                   TextColor="{AppThemeBinding Light=#666666, Dark=#BBBBBB}" />
+
+                        </VerticalStackLayout>
+
+                        <Switch x:Name="VibrationSwitch"
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                Margin="0,14,0,0"
+                                SemanticProperties.Description="Toggle haptic feedback" />
+
+                    </Grid>
+
+                </VerticalStackLayout>
+
+            </Border>
+
+            <!-- ===================================================== -->
+            <!-- REMINDERS SECTION -->
+            <!-- ===================================================== -->
+            <Border Stroke="{AppThemeBinding Light=#DDDDDD, Dark=#2A2A2A}"
+                    BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 16"
+                    Padding="16">
+
+                <VerticalStackLayout Spacing="14">
+
+                    <Label Text="Reminders"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+
+                    <Grid ColumnDefinitions="*,Auto"
+                          RowDefinitions="Auto,Auto">
+
+                        <!-- Location reminder toggle -->
+                        <VerticalStackLayout Grid.Row="0"
+                                             Grid.Column="0"
+                                             Spacing="2">
+
+                            <Label Text="Location reminders"
+                                   FontAttributes="Bold"
+                                   TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+
+                            <Label Text="Alert you when you are near a saved task location."
+                                   FontSize="13"
+                                   TextColor="{AppThemeBinding Light=#666666, Dark=#BBBBBB}" />
+
+                        </VerticalStackLayout>
+
+                        <Switch x:Name="LocationSwitch"
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                SemanticProperties.Description="Toggle location reminders" />
+
+                        <!-- Due task check toggle -->
+                        <VerticalStackLayout Grid.Row="1"
+                                             Grid.Column="0"
+                                             Spacing="2"
+                                             Margin="0,14,0,0">
+
+                            <Label Text="Due task checks"
+                                   FontAttributes="Bold"
+                                   TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+
+                            <Label Text="Check for due tasks in the background while the app is open."
+                                   FontSize="13"
+                                   TextColor="{AppThemeBinding Light=#666666, Dark=#BBBBBB}" />
+
+                        </VerticalStackLayout>
+
+                        <Switch x:Name="DueTaskSwitch"
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                Margin="0,14,0,0"
+                                SemanticProperties.Description="Toggle due task reminders" />
+
+                    </Grid>
+
+                </VerticalStackLayout>
+
+            </Border>
+
+            
+            <!-- APPEARANCE SECTION    -->
+           
+            <Border Stroke="{AppThemeBinding Light=#DDDDDD, Dark=#2A2A2A}"
+                    BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 16"
+                    Padding="16">
+
+                <VerticalStackLayout Spacing="12">
+
+                    <Label Text="Appearance"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+
+                    <!-- Theme selector label -->
+                    <Label Text="Theme"
+                           FontAttributes="Bold"
+                           TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+
+                    <!-- Theme picker -->
+                    <Picker x:Name="ThemePicker"
+                            Title="Choose theme"
+                            TitleColor="{AppThemeBinding Light=#666666, Dark=#BBBBBB}"
+                            TextColor="{AppThemeBinding Light=Black, Dark=White}"
+                            BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
+                            SemanticProperties.Description="Choose app appearance theme">
+
+                        <Picker.Items>
+                            <x:String>System</x:String>
+                            <x:String>Light</x:String>
+                            <x:String>Dark</x:String>
+                        </Picker.Items>
+
+                    </Picker>
+
+                </VerticalStackLayout>
+
+            </Border>
+
+            <!-- Save settings button -->
+            <Button Text="Save Settings"
+                    Clicked="OnSaveSettingsClicked"
+                    HeightRequest="50"
+                    CornerRadius="12"
+                    FontAttributes="Bold"
+                    BackgroundColor="#6200EE"
+                    TextColor="White"
+                    SemanticProperties.Description="Save application settings" />
+
+            <!-- Save result message -->
+            <Label x:Name="StatusLabel"
+                   Text=""
+                   FontSize="13"
+                   TextColor="Green"
+                   SemanticProperties.Description="Settings save status" />
+
+        </VerticalStackLayout>
+
+    </ScrollView>
+
+</ContentPage>

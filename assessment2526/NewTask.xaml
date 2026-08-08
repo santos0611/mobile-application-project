@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="assessment2526.NewTask"
+    Title="New Task"
+    BackgroundColor="{AppThemeBinding Light=#F7F7F7, Dark=#121212}">
+
+    <!-- ScrollView ensures the full form remains usable on smaller mobile screens -->
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+
+            <!-- Basic task information -->
+            <Label Text="Create Task"
+                   FontSize="{DynamicResource TitleFontSize}"
+                   FontAttributes="Bold"
+                   TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+
+            <Label Text="Task Title"
+                   FontSize="{DynamicResource BodyFontSize}"
+                   TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+
+            <Entry Text="{Binding Title}"
+                   Placeholder="Enter task title"
+                   FontSize="{DynamicResource BodyFontSize}"
+                   TextColor="{AppThemeBinding Light=Black, Dark=White}"
+                   PlaceholderColor="{AppThemeBinding Light=#777777, Dark=#BBBBBB}"
+                   BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}" />
+
+            <Label Text="Description"
+                   FontSize="{DynamicResource BodyFontSize}"
+                   TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+
+            <Editor Text="{Binding Description}"
+                    Placeholder="Enter task description"
+                    FontSize="{DynamicResource BodyFontSize}"
+                    TextColor="{AppThemeBinding Light=Black, Dark=White}"
+                    PlaceholderColor="{AppThemeBinding Light=#777777, Dark=#BBBBBB}"
+                    BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
+                    AutoSize="TextChanges"
+                    HeightRequest="120" />
+
+            <!-- Priority influences UI styling and alert behaviour -->
+            <Label Text="Priority"
+                   FontSize="{DynamicResource BodyFontSize}"
+                   TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+
+            <Picker Title="Select priority"
+                    SelectedItem="{Binding Priority}"
+                    FontSize="{DynamicResource BodyFontSize}"
+                    TextColor="{AppThemeBinding Light=Black, Dark=White}"
+                    TitleColor="{AppThemeBinding Light=#666666, Dark=#BBBBBB}"
+                    BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}">
+                <Picker.Items>
+                    <x:String>Low</x:String>
+                    <x:String>Medium</x:String>
+                    <x:String>High</x:String>
+                </Picker.Items>
+            </Picker>
+
+            <!-- Optional image attachment captured from the device camera -->
+            <Button Text="Attach Photo"
+                    FontSize="{DynamicResource ButtonFontSize}"
+                    HeightRequest="44"
+                    Clicked="OnAttachPhotoClicked" />
+
+            <Image Source="{Binding ImagePath}"
+                   HeightRequest="120"
+                   WidthRequest="120"
+                   Aspect="AspectFit" />
+
+            <!-- Due date and time are captured separately, then combined in the ViewModel -->
+            <Label Text="Due Date"
+                   FontSize="{DynamicResource BodyFontSize}"
+                   TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+
+            <DatePicker Date="{Binding DueDate}"
+                        FontSize="{DynamicResource BodyFontSize}"
+                        TextColor="{AppThemeBinding Light=Black, Dark=White}"
+                        BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}" />
+
+            <Label Text="Due Time"
+                   FontSize="{DynamicResource BodyFontSize}"
+                   TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+
+            <TimePicker Time="{Binding DueTime}"
+                        FontSize="{DynamicResource BodyFontSize}"
+                        TextColor="{AppThemeBinding Light=Black, Dark=White}"
+                        BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}" />
+
+            <!-- Location can be geocoded into coordinates for location-based reminders -->
+            <Label Text="Location"
+                   FontSize="{DynamicResource BodyFontSize}"
+                   TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+
+            <Entry Text="{Binding StoreAddress}"
+                   Placeholder="Enter Location or address"
+                   FontSize="{DynamicResource BodyFontSize}"
+                   TextColor="{AppThemeBinding Light=Black, Dark=White}"
+                   PlaceholderColor="{AppThemeBinding Light=#777777, Dark=#BBBBBB}"
+                   BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}" />
+
+            <Button Text="Find Location"
+                    FontSize="{DynamicResource ButtonFontSize}"
+                    HeightRequest="44"
+                    Clicked="OnFindStoreLocationClicked" />
+
+            
+            <!-- Save/update and clear actions -->
+            <HorizontalStackLayout Spacing="10">
+                <Button Text="{Binding SaveButtonText}"
+                        FontSize="{DynamicResource ButtonFontSize}"
+                        HeightRequest="44"
+                        Command="{Binding SaveCommand}" />
+                <Button Text="Clear"
+                        FontSize="{DynamicResource ButtonFontSize}"
+                        HeightRequest="44"
+                        Command="{Binding ClearCommand}" />
+            </HorizontalStackLayout>
+
+            <!-- Feedback label for validation and save status messages -->
+            <Label Text="{Binding StatusMessage}"
+                   FontSize="{DynamicResource BodyFontSize}"
+                   TextColor="{AppThemeBinding Light=Green, Dark=#7CFC98}" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

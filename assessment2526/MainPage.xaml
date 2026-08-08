@@ -1,0 +1,342 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    x:Name="ThisPage"
+    x:Class="assessment2526.MainPage"
+    Title="Home"
+    BackgroundColor="{AppThemeBinding Light=#F7F7F7, Dark=#121212}">
+
+    <!-- Outer grid for page layout.
+         Uses responsive padding for phones and tablets only. -->
+    <Grid Padding="{OnIdiom Phone='16', Tablet='28'}"
+          RowDefinitions="Auto,Auto,Auto,*">
+
+        <!-- Page title.
+             Uses dynamic font size so the large text setting changes it at runtime.
+             Uses AppThemeBinding so it stays visible in both light and dark mode. -->
+        <Label Grid.Row="0"
+               Text="My Tasks"
+               FontSize="{DynamicResource TitleFontSize}"
+               FontAttributes="Bold"
+               TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+
+        <!-- Small dashboard summary that will display total, pending, and completed tasks -->
+        <Border Grid.Row="1"
+                Margin="0,12,0,12"
+                Padding="12"
+                StrokeThickness="0"
+                BackgroundColor="{AppThemeBinding Light=#ECE8FF, Dark=#241A3D}"
+                StrokeShape="RoundRectangle 12">
+
+            <HorizontalStackLayout Spacing="20">
+
+                <VerticalStackLayout Spacing="2">
+                    <Label Text="Total"
+                           FontSize="12"
+                           TextColor="{AppThemeBinding Light=#555555, Dark=#BBBBBB}" />
+                    <Label x:Name="TotalTasksLabel"
+                           Text="0"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="2">
+                    <Label Text="Pending"
+                           FontSize="12"
+                           TextColor="{AppThemeBinding Light=#555555, Dark=#BBBBBB}" />
+                    <Label x:Name="PendingTasksLabel"
+                           Text="0"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           TextColor="Orange" />
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="2">
+                    <Label Text="Done"
+                           FontSize="12"
+                           TextColor="{AppThemeBinding Light=#555555, Dark=#BBBBBB}" />
+                    <Label x:Name="CompletedTasksLabel"
+                           Text="0"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           TextColor="Green" />
+                </VerticalStackLayout>
+
+            </HorizontalStackLayout>
+        </Border>
+
+        <!-- Filter tasks by status or priority  -->
+        <VerticalStackLayout Grid.Row="2"
+                             Spacing="12"
+                             Margin="0,0,0,15">
+
+            <Label Text="Filter Tasks"
+                   FontSize="{DynamicResource BodyFontSize}"
+                   FontAttributes="Bold"
+                   TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+
+            <Picker x:Name="FilterPicker"
+                    FontSize="{DynamicResource BodyFontSize}"
+                    TextColor="{AppThemeBinding Light=Black, Dark=White}"
+                    TitleColor="{AppThemeBinding Light=#666666, Dark=#BBBBBB}"
+                    BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
+                    SelectedIndexChanged="OnSelectionChanged">
+
+                <Picker.Items>
+                    <x:String>All</x:String>
+                    <x:String>Completed</x:String>
+                    <x:String>Pending</x:String>
+                    <x:String>High Priority</x:String>
+                    <x:String>Medium Priority</x:String>
+                    <x:String>Low Priority</x:String>
+                </Picker.Items>
+
+            </Picker>
+
+            <!-- Sort tasks by due date or title -->
+            <Label Text="Sort Tasks"
+                   Margin="0,8,0,0"
+                   FontSize="{DynamicResource BodyFontSize}"
+                   FontAttributes="Bold"
+                   TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+
+            <Picker x:Name="SortPicker"
+                    FontSize="{DynamicResource BodyFontSize}"
+                    TextColor="{AppThemeBinding Light=Black, Dark=White}"
+                    TitleColor="{AppThemeBinding Light=#666666, Dark=#BBBBBB}"
+                    BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
+                    SelectedIndexChanged="OnSelectionChanged">
+
+                <Picker.Items>
+                    <x:String>Default</x:String>
+                    <x:String>Due Date Asc</x:String>
+                    <x:String>Due Date Desc</x:String>
+                    <x:String>Title A-Z</x:String>
+                    <x:String>Title Z-A</x:String>
+                </Picker.Items>
+
+            </Picker>
+
+        </VerticalStackLayout>
+
+        <!-- Empty page message shown when there are no tasks -->
+        <Grid Grid.Row="3">
+
+            <VerticalStackLayout x:Name="EmptyStateLayout"
+                                 IsVisible="False"
+                                 VerticalOptions="Center"
+                                 HorizontalOptions="Center"
+                                 Spacing="10">
+
+                <Label Text="📝"
+                       FontSize="48"
+                       HorizontalTextAlignment="Center" />
+
+                <Label Text="No tasks yet"
+                       FontSize="{DynamicResource SectionFontSize}"
+                       FontAttributes="Bold"
+                       TextColor="{AppThemeBinding Light=Black, Dark=White}"
+                       HorizontalTextAlignment="Center" />
+
+                <Label Text="Tap the + button to add your first task."
+                       FontSize="{DynamicResource BodyFontSize}"
+                       TextColor="{AppThemeBinding Light=#555555, Dark=#BBBBBB}"
+                       HorizontalTextAlignment="Center" />
+            </VerticalStackLayout>
+
+            <!-- Main task list -->
+            <CollectionView x:Name="TasksCollectionView"
+                            VerticalOptions="FillAndExpand">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <!-- Swipe gestures allow quick delete/complete actions -->
+                        <SwipeView>
+                            <SwipeView.LeftItems>
+                                <SwipeItems Mode="Execute">
+                                    <SwipeItem Text="Delete"
+                                               BackgroundColor="Red"
+                                               Invoked="OnSwipeDeleteInvoked" />
+                                </SwipeItems>
+                            </SwipeView.LeftItems>
+
+                            <SwipeView.RightItems>
+                                <SwipeItems Mode="Execute">
+                                    <SwipeItem Text="                                                                                                       Completed"
+                                               BackgroundColor="Green"
+                                               Invoked="OnSwipeCompletedInvoked" />
+                                </SwipeItems>
+                            </SwipeView.RightItems>
+
+                            <!-- Main task card.Theme aware. Improved responsive scaling for phone/tablet. -->
+                            <Border Stroke="{Binding PriorityColor}"
+                                    Opacity="{Binding CardOpacity}"
+                                    BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
+                                    StrokeThickness="2"
+                                    StrokeShape="RoundRectangle 14"
+                                    Padding="{OnIdiom Phone='12', Tablet='16'}"
+                                    Margin="0,6">
+
+                                <VerticalStackLayout Spacing="10">
+
+                                    <!-- Main content grid.
+                                         Column 0 = optional image
+                                         Column 1 = task details -->
+                                    <Grid ColumnDefinitions="{OnIdiom Phone='90,*', Tablet='110,*'}"
+                                          RowDefinitions="Auto,Auto,Auto,Auto,Auto"
+                                          ColumnSpacing="12"
+                                          RowSpacing="6">
+
+                                        <!-- Optional task image.
+                                             Keeps pictures neat and proportional. -->
+                                        <Border Grid.RowSpan="5"
+                                                Grid.Column="0"
+                                                BackgroundColor="{AppThemeBinding Light=#F0F0F0, Dark=#2A2A2A}"
+                                                Stroke="{AppThemeBinding Light=#DDDDDD, Dark=#333333}"
+                                                StrokeShape="RoundRectangle 12"
+                                                HeightRequest="{OnIdiom Phone=90, Tablet=110}"
+                                                WidthRequest="{OnIdiom Phone=90, Tablet=110}"
+                                                IsVisible="{Binding HasImage}">
+
+                                            <Image Source="{Binding ImagePath}"
+                                                   Aspect="AspectFill"
+                                                   HeightRequest="{OnIdiom Phone=90, Tablet=110}"
+                                                   WidthRequest="{OnIdiom Phone=90, Tablet=110}" />
+                                        </Border>
+
+                                        <!-- Title and speech button -->
+                                        <Grid Grid.Row="0"
+                                              Grid.Column="1"
+                                              ColumnDefinitions="*,Auto">
+
+                                            <Label Text="{Binding Title}"
+                                                   TextDecorations="{Binding TitleDecoration}"
+                                                   FontSize="{DynamicResource SectionFontSize}"
+                                                   FontAttributes="Bold"
+                                                   LineBreakMode="TailTruncation"
+                                                   TextColor="{AppThemeBinding Light=Black, Dark=White}"
+                                                   VerticalOptions="Center"
+                                                   Grid.Column="0" />
+
+                                            <Button Text="🔊"
+                                                    FontSize="{DynamicResource ButtonFontSize}"
+                                                    WidthRequest="{OnIdiom Phone=44, Tablet=48}"
+                                                    HeightRequest="{OnIdiom Phone=44, Tablet=48}"
+                                                    CornerRadius="{OnIdiom Phone=22, Tablet=24}"
+                                                    Padding="0"
+                                                    Grid.Column="1"
+                                                    Clicked="OnSpeakClicked" />
+                                        </Grid>
+
+                                        <!-- Long press anywhere in this section opens edit mode -->
+                                        <VerticalStackLayout Grid.Row="1"
+                                                             Grid.Column="1"
+                                                             Grid.RowSpan="4"
+                                                             Spacing="5">
+
+                                            <VerticalStackLayout.Behaviors>
+                                                <toolkit:TouchBehavior
+                                                    LongPressDuration="700"
+                                                    LongPressCommand="{Binding Source={x:Reference ThisPage}, Path=LongPressEditCommand}"
+                                                    LongPressCommandParameter="{Binding .}" />
+                                            </VerticalStackLayout.Behaviors>
+
+                                            <!-- Description -->
+                                            <Label Text="{Binding Description}"
+                                                   FontSize="{DynamicResource BodyFontSize}"
+                                                   LineBreakMode="WordWrap"
+                                                   MaxLines="3"
+                                                   TextColor="{AppThemeBinding Light=#333333, Dark=#DDDDDD}" />
+
+                                            <!-- Priority uses both colour and text for better accessibility -->
+                                            <Label Text="{Binding Priority, StringFormat='Priority: {0}'}"
+                                                   FontSize="{DynamicResource BodyFontSize}"
+                                                   TextColor="{Binding PriorityColor}" />
+
+                                            <!-- Due date -->
+                                            <Label Text="{Binding DueDateTime, StringFormat='Due: {0:dd/MM/yyyy HH:mm}'}"
+                                                   FontSize="{DynamicResource BodyFontSize}"
+                                                   TextColor="{AppThemeBinding Light=#333333, Dark=#DDDDDD}" />
+
+                                            <!-- Status -->
+                                            <Label Text="{Binding StatusText}"
+                                                   FontAttributes="Bold"
+                                                   FontSize="{DynamicResource BodyFontSize}"
+                                                   TextColor="{AppThemeBinding Light=#333333, Dark=#DDDDDD}" />
+
+                                            <!-- Location only shows when a linked location exists -->
+                                            <Label Text="{Binding StoreAddress, StringFormat='Location: {0}'}"
+                                                   FontSize="{DynamicResource BodyFontSize}"
+                                                   TextColor="{AppThemeBinding Light=#333333, Dark=#DDDDDD}"
+                                                   IsVisible="{Binding HasLocation}" />
+
+                                        </VerticalStackLayout>
+
+                                    </Grid>
+
+                                    <!-- Action buttons.
+                                         FlexLayout wraps nicely on small screens. -->
+                                    <FlexLayout Direction="Row"
+                                                Wrap="Wrap"
+                                                JustifyContent="Start"
+                                                AlignItems="Start">
+
+                                        <Button Text="Edit"
+                                                Margin="0,0,8,8"
+                                                FontSize="{DynamicResource ButtonFontSize}"
+                                                HeightRequest="{OnIdiom Phone=44, Tablet=48}"
+                                                Clicked="OnEditClicked" />
+
+                                        <Button Text="Complete"
+                                                Margin="0,0,8,8"
+                                                FontSize="{DynamicResource ButtonFontSize}"
+                                                HeightRequest="{OnIdiom Phone=44, Tablet=48}"
+                                                IsVisible="{Binding ShowCompleteButton}"
+                                                Clicked="OnCompleteClicked" />
+
+                                        <Button Text="Delete"
+                                                Margin="0,0,8,8"
+                                                FontSize="{DynamicResource ButtonFontSize}"
+                                                HeightRequest="{OnIdiom Phone=44, Tablet=48}"
+                                                Clicked="OnDeleteClicked" />
+
+                                    </FlexLayout>
+
+                                </VerticalStackLayout>
+
+                            </Border>
+
+                        </SwipeView>
+
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </Grid>
+
+        <!-- Floating add button -->
+        <Button Text="+"
+                FontSize="{OnIdiom Phone=28, Tablet=32}"
+                WidthRequest="{OnIdiom Phone=65, Tablet=72}"
+                HeightRequest="{OnIdiom Phone=65, Tablet=72}"
+                CornerRadius="{OnIdiom Phone=32, Tablet=36}"
+                BackgroundColor="#6200EE"
+                TextColor="White"
+                HorizontalOptions="End"
+                VerticalOptions="End"
+                Margin="{OnIdiom Phone='20', Tablet='28'}"
+                Clicked="OnAddTaskClicked">
+
+            <Button.Shadow>
+                <Shadow Brush="Black"
+                        Offset="2,2"
+                        Radius="10"
+                        Opacity="0.4" />
+            </Button.Shadow>
+
+        </Button>
+
+    </Grid>
+</ContentPage>
